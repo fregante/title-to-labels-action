@@ -1,0 +1,26 @@
+[
+	{
+		"keywords": [
+			"enhancement",
+			"feature request",
+			"new feature",
+			"feat",
+			"fr",
+			"idea",
+			"suggestion"
+		],
+		"labels": [
+			"enhancement"
+		]
+	},
+	{
+		"keywords": [
+			"bug",
+			"bug report",
+			"error"
+		],
+		"labels": [
+			"bug"
+		]
+	}
+]

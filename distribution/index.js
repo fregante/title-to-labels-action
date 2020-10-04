@@ -2,15 +2,20 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 382:
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse("[{\"keywords\":[\"enhancement\",\"feature request\",\"new feature\",\"feat\",\"fr\",\"idea\",\"suggestion\"],\"labels\":[\"enhancement\"]},{\"keywords\":[\"bug\",\"bug report\",\"error\"],\"labels\":[\"bug\"]}]");
+
+/***/ }),
+
 /***/ 932:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186);
 const {Octokit} = __webpack_require__(231);
-const parseTitle = __webpack_require__(235);
-const event = require(process.env.GITHUB_EVENT_PATH);
-
-const octokit = new Octokit();
+const {parseTitle, parseTitleWithDefaults} = __webpack_require__(235);
 
 function parseList(string) {
 	return string
@@ -19,7 +24,17 @@ function parseList(string) {
 		.filter(Boolean);
 }
 
+async function getInputs() {
+	const keywords = parseList(core.getInput('keywords'));
+	const labels = parseList(core.getInput('labels'));
+	core.debug(`Received keywords: ${keywords.join(', ')}`);
+	core.debug(`Received labels: ${labels.join(', ')}`);
+	return {keywords, labels};
+}
+
 async function run() {
+	const event = require(process.env.GITHUB_EVENT_PATH);
+
 	if (!['issues', 'pull_request'].includes(process.env.GITHUB_EVENT_NAME)) {
 		throw new Error('Only `issues` and `pull_request` events are supported. Received: ' + process.env.GITHUB_EVENT_NAME);
 	}
@@ -29,18 +44,17 @@ async function run() {
 	}
 
 	const conversation = event.issue || event.pull_request;
-	const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-	const issue_number = conversation.number;
+	let update = {};
+	if (core.getInput('keywords')) {
+		update = parseTitle(conversation.title, getInputs());
+	} else if (core.getInput('labels')) {
+		throw new Error('Labels can’t be set without keywords. Set neither, set only keywords, or set both.');
+	} else {
+		core.info('No keywords defined. The defaults will be used');
+		update = parseTitleWithDefaults(conversation.title);
+	}
 
-	const inputKeywords = parseList(core.getInput('keywords', {required: true}));
-	const inputLabels = parseList(core.getInput('labels'));
-	core.debug(`Received keywords: ${inputKeywords.join(', ')}`);
-	core.debug(`Received labels: ${inputLabels.join(', ')}`);
-
-	const {title, labels} = parseTitle(conversation.title, {
-		keywords: inputKeywords,
-		labels: inputLabels
-	});
+	const {title, labels} = update;
 
 	if (conversation.title === title) {
 		core.info('No title changes needed');
@@ -50,6 +64,9 @@ async function run() {
 	core.info(`Changing title from "${conversation.title}" to ${title}`);
 	core.info(`Adding labels: ${labels.join(', ')}`);
 
+	const octokit = new Octokit();
+	const issue_number = conversation.number;
+	const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
 	await Promise.all([
 		octokit.issues.addLabels({owner, repo, labels, issue_number}),
 		octokit.issues.update({owner, repo, issue_number, title})
@@ -4805,7 +4822,9 @@ function wrappy (fn, cb) {
 /***/ }),
 
 /***/ 235:
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+const defaults = __webpack_require__(382);
 
 function titleCase(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
@@ -4827,7 +4846,19 @@ function parseTitle(title, {keywords, labels}) {
 	return {title, labels: []};
 }
 
-module.exports = parseTitle;
+function parseTitleWithDefaults(title) {
+	for (const {keywords, labels} of defaults) {
+		const updates = parseTitle(title, {keywords, labels});
+		if (title !== updates.title) {
+			return updates;
+		}
+	}
+
+	return {title, labels: []};
+}
+
+exports.parseTitle = parseTitle;
+exports.parseTitleWithDefaults = parseTitleWithDefaults;
 
 
 /***/ }),
