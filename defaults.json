@@ -7,7 +7,8 @@
 			"feat",
 			"fr",
 			"idea",
-			"suggestion"
+			"suggestion",
+			"new"
 		],
 		"labels": [
 			"enhancement"
@@ -17,6 +18,8 @@
 		"keywords": [
 			"bug",
 			"bug report",
+			"issue",
+			"bugfix",
 			"error"
 		],
 		"labels": [
