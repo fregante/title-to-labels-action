@@ -1,16 +1,21 @@
-name: "units-test"
+name: CI
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
+  - pull_request
+  - push
 
 jobs:
-  # unit tests
-  units:
+  Test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - run: npm ci
     - run: npm test
+
+  Verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
+      - run: git diff --exit-code
+        name: Verify that distribution/index.js is up to date
