@@ -1,8 +1,9 @@
 name: Cleanup titles
 on:
   issues:
-    - created
-    - edited
+    types:
+      - opened
+      - edited
 
 jobs:
   Cleanup:
