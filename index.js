@@ -1,23 +1,25 @@
 const core = require('@actions/core');
 const {Octokit} = require('@octokit/action');
 const parseTitle = require('./parse-title');
-const octokit = new Octokit();
 const event = require(process.env.GITHUB_EVENT_PATH);
+
+const octokit = new Octokit();
 
 function parseList(string) {
 	return string
-		.split(/[,\n]+/)
+		.split(/[\n,]+/)
 		.map(line => line.trim())
 		.filter(Boolean);
 }
 
 async function run() {
-	if (process.env.GITHUB_EVENT_NAME === 'issue') {
-		throw new Error('Only `issue` events are supported. Received: ' + process.env.GITHUB_EVENT_NAME);
+	if (!['issues', 'pull_request'].includes(process.env.GITHUB_EVENT_NAME)) {
+		throw new Error('Only `issues` and `pull_request` events are supported. Received: ' + process.env.GITHUB_EVENT_NAME);
 	}
 
-	if (['opened', 'edited'].includes(event.event)) {
-		throw new Error('Only `issue.opened` and `issue.edited` events are supported. Received: issue.' + event.event);
+	console.log(event);
+	if (!['opened', 'edited'].includes(event.event)) {
+		throw new Error(`Only types \`opened\` and \`edited\` events are supported. Received: ${process.env.GITHUB_EVENT_NAME}.${event.event}`);
 	}
 
 	const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');

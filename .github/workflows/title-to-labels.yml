@@ -1,5 +1,9 @@
 name: Self
 on:
+  pull_request:
+    types:
+      - opened
+      - edited
   issues:
     types:
       - opened
@@ -11,12 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        name: Local action (enhancement)
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           keywords: |
             feature request
             enhancement
+          labels: enhancement
       - uses: ./
+        name: Local action (bug)
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           keywords: bug, bug report
