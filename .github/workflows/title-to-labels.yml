@@ -11,11 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        name: Local action
+        name: Local action (with defaults)
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./
+        name: Local action (with inputs)
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          keywords: rule proposal
-          labels: new rule, evaluating
+          keywords: question, q
+          labels: question, documentation
