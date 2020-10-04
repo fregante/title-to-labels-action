@@ -1,13 +1,9 @@
 name: Self
 on:
   pull_request:
-    types:
-      - opened
-      - edited
+    types: [opened, edited]
   issues:
-    types:
-      - opened
-      - edited
+    types: [opened, edited]
 
 jobs:
   Self:

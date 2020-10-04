@@ -21,11 +21,11 @@ Title examples:
   <tr>
     <td>Bug - some error happened
     <td>Some error happened
-    <td><code>bug</code>
+    <td><code>bug</code> <code>triage</code>
   <tr>
     <td>[Feature request] prepare coffee
     <td>Prepare coffee
-    <td><code>enhancement</code> <code>under discussion</code>
+    <td><code>enhancement</code>
   <tr>
     <td>Suggestion: add more tags
     <td>Add more tags
@@ -40,11 +40,12 @@ Title examples:
 
 ```yaml
 name: Labeler
+
 on:
+  pull_request:
+    types: [opened, edited]
   issues:
-    types:
-      - opened
-      - edited
+    types: [opened, edited]
 
 jobs:
   Label:
@@ -69,11 +70,12 @@ Examples:
 
 ```yaml
 name: Labeler
+
 on:
+  pull_request:
+    types: [opened, edited]
   issues:
-    types:
-      - opened
-      - edited
+    types: [opened, edited]
 
 jobs:
   Label:
