@@ -14,3 +14,8 @@ jobs:
         name: Local action
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ./
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          keywords: rule proposal
+          labels: new rule, evaluating
