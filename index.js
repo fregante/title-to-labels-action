@@ -9,7 +9,7 @@ function parseList(string) {
 		.filter(Boolean);
 }
 
-async function getInputs() {
+function getInputs() {
 	const keywords = parseList(core.getInput('keywords'));
 	const labels = parseList(core.getInput('labels'));
 	core.debug(`Received keywords: ${keywords.join(', ')}`);
