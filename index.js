@@ -6,7 +6,10 @@ const octokit = new Octokit();
 const event = require(process.env.GITHUB_EVENT_PATH);
 
 function parseList(string) {
-	return string.split(/[,\n]+/).map(line => line.trim()).filter(Boolean);
+	return string
+		.split(/[,\n]+/)
+		.map(line => line.trim())
+		.filter(Boolean);
 }
 
 async function run() {
@@ -26,7 +29,10 @@ async function run() {
 	core.debug(`Received keywords: ${inputKeywords.join(', ')}`);
 	core.debug(`Received labels: ${inputLabels.join(', ')}`);
 
-	const {title, labels} = parseTitle(event.issue.title, {keywords: inputKeywords, labels: inputLabels});
+	const {title, labels} = parseTitle(event.issue.title, {
+		keywords: inputKeywords,
+		labels: inputLabels
+	});
 
 	if (event.issue.title === title) {
 		core.info('No title changes needed');
