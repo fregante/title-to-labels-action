@@ -1,7 +1,6 @@
 const core = require('@actions/core');
-
-const parseTitle = require('./parse-title');
 const {Octokit} = require('@octokit/action');
+const parseTitle = require('./parse-title');
 const octokit = new Octokit();
 const event = require(process.env.GITHUB_EVENT_PATH);
 

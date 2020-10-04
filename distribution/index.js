@@ -6,14 +6,16 @@ require('./sourcemap-register.js');module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186);
-
-const parseTitle = __webpack_require__(235);
 const {Octokit} = __webpack_require__(231);
+const parseTitle = __webpack_require__(235);
 const octokit = new Octokit();
 const event = require(process.env.GITHUB_EVENT_PATH);
 
 function parseList(string) {
-	return string.split(/[,\n]+/).map(line => line.trim()).filter(Boolean);
+	return string
+		.split(/[,\n]+/)
+		.map(line => line.trim())
+		.filter(Boolean);
 }
 
 async function run() {
@@ -33,7 +35,10 @@ async function run() {
 	core.debug(`Received keywords: ${inputKeywords.join(', ')}`);
 	core.debug(`Received labels: ${inputLabels.join(', ')}`);
 
-	const {title, labels} = parseTitle(event.issue.title, {keywords: inputKeywords, labels: inputLabels});
+	const {title, labels} = parseTitle(event.issue.title, {
+		keywords: inputKeywords,
+		labels: inputLabels
+	});
 
 	if (event.issue.title === title) {
 		core.info('No title changes needed');
@@ -4806,10 +4811,13 @@ function titleCase(string) {
 
 function parseTitle(title, {keywords, labels}) {
 	const [, intro] = title.split(/(.+[)-:\]])/, 2);
-	const cleanIntro = intro?.replace(/[^\w\s]/g, '').toLowerCase().trim();
+	const cleanIntro = intro && intro
+		.replace(/[^\s\w]/g, '')
+		.toLowerCase()
+		.trim();
 	if (intro && keywords.some(keyword => keyword.toLowerCase() === cleanIntro)) {
 		return {
-			labels: labels ?? [],
+			labels: labels ? labels : [],
 			title: titleCase(title.replace(intro, '').trim())
 		};
 	}

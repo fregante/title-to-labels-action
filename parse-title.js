@@ -4,13 +4,13 @@ function titleCase(string) {
 
 function parseTitle(title, {keywords, labels}) {
 	const [, intro] = title.split(/(.+[)-:\]])/, 2);
-	const cleanIntro = intro
-		?.replace(/[^\w\s]/g, '')
+	const cleanIntro = intro && intro
+		.replace(/[^\s\w]/g, '')
 		.toLowerCase()
 		.trim();
 	if (intro && keywords.some(keyword => keyword.toLowerCase() === cleanIntro)) {
 		return {
-			labels: labels ?? [],
+			labels: labels ? labels : [],
 			title: titleCase(title.replace(intro, '').trim())
 		};
 	}
