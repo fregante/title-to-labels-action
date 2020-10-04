@@ -6,7 +6,7 @@ require('./sourcemap-register.js');module.exports =
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse("[{\"keywords\":[\"enhancement\",\"feature request\",\"new feature\",\"feat\",\"fr\",\"idea\",\"suggestion\"],\"labels\":[\"enhancement\"]},{\"keywords\":[\"bug\",\"bug report\",\"error\"],\"labels\":[\"bug\"]}]");
+module.exports = JSON.parse("[{\"keywords\":[\"enhancement\",\"feature request\",\"new feature\",\"feat\",\"fr\",\"idea\",\"suggestion\",\"new\"],\"labels\":[\"enhancement\"]},{\"keywords\":[\"bug\",\"bug report\",\"issue\",\"bugfix\",\"error\"],\"labels\":[\"bug\"]}]");
 
 /***/ }),
 
