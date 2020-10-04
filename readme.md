@@ -8,11 +8,24 @@ This Action can remove the specified keywords at the beginning of issue titles a
 
 Title examples:
 
-User title | Output
---- | ---
-Bug - some error happened | Some error happened <br> label: bug
-[Feature request] prepare coffee | Prepare coffee <br> labels: enhancement
-Suggestion: add more tags | Add more tags
+<table>
+  <tr>
+    <th>User title
+    <th>➡️ Updated title
+    <th>➡️ Added labels
+  <tr>
+    <td>Bug - some error happened
+    <td>Some error happened
+    <td><code>bug</code>
+  <tr>
+    <td>[Feature request] prepare coffee
+    <td>Prepare coffee
+    <td><code>enhancement</code> <code>under discussion</code>
+  <tr>
+    <td>Suggestion: add more tags
+    <td>Add more tags
+    <td><em>none, title-change only</em>
+</table>
 
 **Note:** keywords are only recognized if followed by one of these characters: `:-)]`
 Spaces are automatically trimmed.

@@ -1,5 +1,8 @@
 name: Title to Labels
 description: Cleans up the titles of issues and PRs from common opening keywords.
+branding:
+  icon: minimize-2
+  color: yellow
 inputs:
   keywords:
     description: The keywords to look for, separed by comma or newline. Case-insensitive.

@@ -1,16 +1,10 @@
-name: CI
+name: Build
+
 on:
   - pull_request
   - push
 
 jobs:
-  Test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm ci
-      - run: npm test
-
   Verify:
     runs-on: ubuntu-latest
     steps:
