@@ -7,7 +7,7 @@ GitHub offers issue templates with pre-defined labels, but that doesn't stop use
 This action:
 
 - removes the specified keywords at the beginning of issue titles;
-- *optionally* add related labels.
+- _optionally_ add related labels.
 
 You can either run it without inputs to use its [defaults](defaults.json) or specify your own keywords/labels combination.
 
@@ -31,7 +31,6 @@ Title examples:
     <td>Add more tags
     <td><em>none, title-change only</em>
 </table>
-
 
 **Note:** keywords in titles are only recognized if followed by one of these characters: `:-)]`
 
@@ -66,7 +65,7 @@ jobs:
 Either use one keyword per line or comma-separed values.
 **Note:** Do not use lists starting with `-`, Actions doesn't support them.
 
-Examples.
+Examples:
 
 ```yaml
 name: Labeler
@@ -111,4 +110,4 @@ None.
 
 - [daily-version-action](https://github.com/fregante/daily-version-action) - Creates a new tag using the format Y.M.D, but only if HEAD isn’t already tagged.
 - [release-with-changelog](https://github.com/notlmn/release-with-changelog) - Creates reasonable enough GitHub releases for pushed tags, with the commit log as release body.
-- [setup-git-token](https://github.com/fregante/setup-git-token) - Sets the secrets.GITHUB_TOKEN as credentials for git (enables `git push`)/
+- [setup-git-token](https://github.com/fregante/setup-git-token) - Sets the secrets.GITHUB_TOKEN as credentials for git (enables `git push`).
