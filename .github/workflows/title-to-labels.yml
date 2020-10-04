@@ -1,4 +1,4 @@
-name: Cleanup titles
+name: Self
 on:
   issues:
     types:
@@ -6,7 +6,7 @@ on:
       - edited
 
 jobs:
-  Cleanup:
+  Self:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

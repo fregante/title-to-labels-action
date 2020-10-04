@@ -8,4 +8,4 @@ inputs:
     description: 'The labels to apply when one of the keywords was found. Optional.'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'distribution/index.js'
