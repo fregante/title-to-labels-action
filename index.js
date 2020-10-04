@@ -17,9 +17,8 @@ async function run() {
 		throw new Error('Only `issues` and `pull_request` events are supported. Received: ' + process.env.GITHUB_EVENT_NAME);
 	}
 
-	console.log(event);
-	if (!['opened', 'edited'].includes(event.event)) {
-		throw new Error(`Only types \`opened\` and \`edited\` events are supported. Received: ${process.env.GITHUB_EVENT_NAME}.${event.event}`);
+	if (!['opened', 'edited'].includes(event.action)) {
+		throw new Error(`Only types \`opened\` and \`edited\` events are supported. Received: ${process.env.GITHUB_EVENT_NAME}.${event.action}`);
 	}
 
 	const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
