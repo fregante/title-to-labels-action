@@ -1,11 +1,11 @@
-name: 'Title to Labels'
-description: 'Removes keywords from issue titles and applies the respective labels'
+name: Title to Labels
+description: Cleans up the titles of issues and PRs from common opening keywords.
 inputs:
   keywords:
-    description: 'The keywords to look for, separed by comma or newline. Case-insensitive.'
+    description: The keywords to look for, separed by comma or newline. Case-insensitive.
     required: true
   labels:
-    description: 'The labels to apply when one of the keywords was found. Optional.'
+    description: The labels to apply when one of the keywords was found. Optional.
 runs:
-  using: 'node12'
-  main: 'distribution/index.js'
+  using: node12
+  main: distribution/index.js
