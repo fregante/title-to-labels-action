@@ -1,13 +1,11 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: Title to Labels
+description: Cleans up the titles of issues and PRs from common opening keywords.
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  keywords:
+    description: The keywords to look for, separed by comma or newline. Case-insensitive.
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  labels:
+    description: The labels to apply when one of the keywords was found. Optional.
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node12
+  main: distribution/index.js

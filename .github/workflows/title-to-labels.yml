@@ -1,0 +1,23 @@
+name: Self
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+jobs:
+  Self:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          keywords: |
+            feature request
+            enhancement
+      - uses: ./
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          keywords: bug, bug report
+          labels: bug
