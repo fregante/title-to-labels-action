@@ -9,6 +9,9 @@ inputs:
     required: true
   labels:
     description: The labels to apply when one of the keywords was found. Optional.
+    required: true
+  GITHUB_TOKEN:
+    description: 'The automatically-generated token, set this to \$\{\{ secrets.GITHUB_TOKEN \}\}'
 runs:
   using: node12
   main: distribution/index.js
