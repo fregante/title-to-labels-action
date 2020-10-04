@@ -1,0 +1,20 @@
+name: Cleanup titles
+on:
+  issues:
+    - created
+    - edited
+
+jobs:
+  Cleanup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      with:
+        keywords: |
+          feature request
+          enhancement
+    - uses: ./
+      with:
+        keywords: bug, bug report
+        labels: bug

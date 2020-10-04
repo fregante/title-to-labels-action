@@ -1,23 +1,85 @@
-const wait = require('./wait');
+const parseTitle = require('./parse-title');
 const process = require('process');
 const cp = require('child_process');
 const path = require('path');
 
-test('throws invalid number', async () => {
-  await expect(wait('foo')).rejects.toThrow('milliseconds not a number');
+test('ignores valid title', async () => {
+  const output = parseTitle('Hello world', {
+    keywords: ['bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Hello world',
+    labels: []
+  });
 });
 
-test('wait 500 ms', async () => {
-  const start = new Date();
-  await wait(500);
-  const end = new Date();
-  var delta = Math.abs(end - start);
-  expect(delta).toBeGreaterThanOrEqual(500);
+test('Drops keyword with semicolon', async () => {
+  const output = parseTitle('Bug: things are broken', {
+    keywords: ['bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
 });
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = 500;
-  const ip = path.join(__dirname, 'index.js');
-  console.log(cp.execSync(`node ${ip}`, {env: process.env}).toString());
-})
+test('Drops keyword with brackets', async () => {
+  const output = parseTitle('[Bug] things are broken', {
+    keywords: ['bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
+});
+
+test('Drops keyword with dash', async () => {
+  const output = parseTitle('Bug - things are broken', {
+    keywords: ['bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
+});
+
+test('Drops keyword that has space', async () => {
+  const output = parseTitle('Bug report: things are broken', {
+    keywords: ['bug report']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
+});
+
+test('Drops keyword regardless of case', async () => {
+  const output = parseTitle('bug: things are broken', {
+    keywords: ['Bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
+});
+
+test('Supports multiple keyword', async () => {
+  const output = parseTitle('Bug report: things are broken', {
+    keywords: ['bug report', 'bug']
+  })
+  expect(output).toMatchObject({
+    title: 'Things are broken',
+    labels: []
+  });
+});
+
+test('Adds specified label', async () => {
+  const output = parseTitle('Feature request - cool things', {
+    keywords: ['Feature request'],
+    labels: ['enhancement'],
+  })
+  expect(output).toMatchObject({
+    title: 'Cool things',
+    labels: ['enhancement']
+  });
+});
