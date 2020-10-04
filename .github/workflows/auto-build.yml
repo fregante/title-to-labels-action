@@ -5,11 +5,12 @@ on:
   - push
 
 jobs:
-  Verify:
+  Commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: npm ci
       - run: npm run build
-      - run: git diff --exit-code
-        name: Verify that distribution/index.js is up to date
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+         commit_message: Update built files
