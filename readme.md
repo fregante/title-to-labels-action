@@ -110,6 +110,7 @@ None.
 
 ## Related
 
+- 🛕 [action-release](https://github.com/fregante/ghatemplates/blob/master/readme.md#action-release) - A workflow to help you release your actions
 - [daily-version-action](https://github.com/fregante/daily-version-action) - Creates a new tag using the format Y.M.D, but only if HEAD isn’t already tagged.
 - [release-with-changelog](https://github.com/notlmn/release-with-changelog) - Creates reasonable enough GitHub releases for pushed tags, with the commit log as release body.
-- [setup-git-token](https://github.com/fregante/setup-git-token) - Sets the secrets.GITHUB_TOKEN as credentials for git (enables `git push`).
+- [setup-git-user](https://github.com/fregante/setup-git-user) - GitHub Action that sets git user and email to enable commiting
