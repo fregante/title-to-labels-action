@@ -4,7 +4,7 @@ const {parseTitle, parseTitleWithDefaults} = require('./parse-title');
 
 function parseList(string) {
 	return string
-		.split(/[\n,]+/)
+		.split(/\n/)
 		.map(line => line.trim())
 		.filter(Boolean);
 }
