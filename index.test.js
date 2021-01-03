@@ -1,4 +1,4 @@
-const {parseTitle} = require('./parse-title');
+const {parseTitle, parseTitleWithDefaults} = require('./parse-title');
 
 test('ignores valid title', async () => {
 	const output = parseTitle('Hello world', {
@@ -83,9 +83,7 @@ test('Adds specified label', async () => {
 
 
 test('Handles long titles', async () => {
-	const output = parseTitle('Feature request: On hover over PR “Files changed” tab, show a popup with the list of files', {
-		keywords: ['feature request']
-	});
+	const output = parseTitleWithDefaults('Feature request: On hover over PR “Files changed” tab, show a popup with the list of files');
 	expect(output).toMatchObject({
 		title: 'On hover over PR “Files changed” tab, show a popup with the list of files',
 		labels: ['enhancement']
