@@ -80,3 +80,14 @@ test('Adds specified label', async () => {
 		labels: ['enhancement']
 	});
 });
+
+
+test('Handles long titles', async () => {
+	const output = parseTitle('Feature request: On hover over PR “Files changed” tab, show a popup with the list of files', {
+		keywords: ['feature request']
+	});
+	expect(output).toMatchObject({
+		title: 'On hover over PR “Files changed” tab, show a popup with the list of files',
+		labels: ['enhancement']
+	});
+});
