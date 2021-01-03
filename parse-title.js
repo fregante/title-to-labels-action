@@ -6,6 +6,7 @@ function titleCase(string) {
 
 function parseTitle(title, {keywords, labels}) {
 	const [, intro] = title.split(/(.+[)-:\]])/, 2);
+	console.log(title, intro, title.split(/(.+[)-:\]])/, 2))
 	const cleanIntro = intro && intro
 		.replace(/[^\s\w]/g, '')
 		.toLowerCase()
@@ -22,6 +23,7 @@ function parseTitle(title, {keywords, labels}) {
 
 function parseTitleWithDefaults(title) {
 	for (const {keywords, labels} of defaults) {
+		console.log(keywords, labels)
 		const updates = parseTitle(title, {keywords, labels});
 		if (title !== updates.title) {
 			return updates;
