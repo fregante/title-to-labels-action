@@ -8,7 +8,7 @@
 		"envs": [
 			"jest"
 		],
-		"ignore": [
+		"ignores": [
 			"distribution"
 		],
 		"rules": {
@@ -17,11 +17,11 @@
 	},
 	"dependencies": {
 		"@actions/core": "^1.2.6",
-		"@octokit/action": "^3.1.1"
+		"@octokit/action": "^3.1.6"
 	},
 	"devDependencies": {
-		"@vercel/ncc": "^0.24.1",
-		"jest": "^26.4.2",
-		"xo": "^0.33.1"
+		"@vercel/ncc": "^0.26.1",
+		"jest": "^26.6.3",
+		"xo": "^0.37.1"
 	}
 }
