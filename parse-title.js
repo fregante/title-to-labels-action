@@ -5,15 +5,21 @@ function titleCase(string) {
 }
 
 function parseTitle(title, {keywords, labels}) {
-	const [, intro] = title.split(/(.+[)-:\]])/, 2);
-	const cleanIntro = intro && intro
+	const separator = /[)\-:\]]+/.exec(title);
+	if (!separator) {
+		return {title, labels: []};
+	}
+
+	const intro = title
+		.slice(0, separator.index)
 		.replace(/[^\s\w]/g, '')
-		.toLowerCase()
-		.trim();
-	if (intro && keywords.some(keyword => keyword.toLowerCase() === cleanIntro)) {
+		.trim()
+		.toLowerCase();
+	if (intro && keywords.some(keyword => keyword.toLowerCase() === intro)) {
+		const cleanTitle = title.slice(separator.index + separator[0].length).trim();
 		return {
 			labels: labels ? labels : [],
-			title: titleCase(title.replace(intro, '').trim())
+			title: titleCase(cleanTitle)
 		};
 	}
 
@@ -22,6 +28,7 @@ function parseTitle(title, {keywords, labels}) {
 
 function parseTitleWithDefaults(title) {
 	for (const {keywords, labels} of defaults) {
+		console.log(keywords, labels);
 		const updates = parseTitle(title, {keywords, labels});
 		if (title !== updates.title) {
 			return updates;

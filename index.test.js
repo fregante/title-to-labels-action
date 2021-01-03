@@ -40,6 +40,15 @@ test('Drops keyword with dash', async () => {
 	});
 });
 
+test('Drops keyword in string with multiple unrelated separators', async () => {
+	const output = parseTitle('Bug - a[href] is broken(-ish)', {
+		keywords: ['bug']
+	});
+	expect(output).toMatchObject({
+		title: 'A[href] is broken(-ish)'
+	});
+});
+
 test('Drops keyword that has space', async () => {
 	const output = parseTitle('Bug report: things are broken', {
 		keywords: ['bug report']
