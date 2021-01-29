@@ -56,6 +56,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+You can automatically install the above with [ghat](https://github.com/fregante/ghat):
+
+```sh
+npx ghat fregante/title-to-labels-action/workflow
+```
+
 ## Inputs
 
 **Note:** If no inputs are supplied, the action will use the [defaults](defaults.json).
