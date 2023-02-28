@@ -1,7 +1,8 @@
 env:
   SCRIPT_NAME: build
 
-# DO NOT EDIT BELOW - use `npx ghat fregante/ghatemplates/is-dist-up-to-date`
+# FILE GENERATED WITH: npx ghat fregante/ghatemplates/is-dist-up-to-date
+# SOURCE: https://github.com/fregante/ghatemplates
 
 name: Verify Built Files
 on:
@@ -11,9 +12,9 @@ jobs:
   Verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: install
         run: npm ci || npm install
-      - run: 'npm run ${{ env.SCRIPT_NAME }}'
+      - run: npm run ${{ env.SCRIPT_NAME }}
       - name: verify that built files are up to date
         run: git diff --exit-code

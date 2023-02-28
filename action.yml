@@ -11,5 +11,5 @@ inputs:
   GITHUB_TOKEN:
     description: 'The automatically-generated token, set this to \$\{\{ secrets.GITHUB_TOKEN \}\}'
 runs:
-  using: node12
+  using: node16
   main: distribution/index.js
