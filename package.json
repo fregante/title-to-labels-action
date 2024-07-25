@@ -1,5 +1,6 @@
 {
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "ncc build index.js -o distribution --source-map --license licenses.txt",
 		"test": "xo && jest && npm run build"

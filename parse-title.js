@@ -1,4 +1,4 @@
-const defaults = require('./defaults.json');
+import defaults from './defaults.json';
 
 function titleCase(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
@@ -18,7 +18,7 @@ function parseTitle(title, {keywords, labels}) {
 	if (intro && keywords.some(keyword => keyword.toLowerCase() === intro)) {
 		const cleanTitle = title.slice(separator.index + separator[0].length).trim();
 		return {
-			labels: labels ? labels : [],
+			labels: labels ?? [],
 			title: titleCase(cleanTitle),
 		};
 	}
@@ -38,5 +38,7 @@ function parseTitleWithDefaults(title) {
 	return {title, labels: []};
 }
 
-exports.parseTitle = parseTitle;
-exports.parseTitleWithDefaults = parseTitleWithDefaults;
+const _parseTitle = parseTitle;
+export {_parseTitle as parseTitle};
+const _parseTitleWithDefaults = parseTitleWithDefaults;
+export {_parseTitleWithDefaults as parseTitleWithDefaults};

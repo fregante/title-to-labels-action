@@ -1,4 +1,4 @@
-const {parseTitle} = require('./parse-title');
+import {parseTitle} from './parse-title.js';
 
 test('ignores valid title', async () => {
 	const output = parseTitle('Hello world', {
