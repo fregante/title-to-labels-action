@@ -56489,7 +56489,7 @@ function getInputs() {
 }
 
 async function run() {
-	if (!['issues', 'pull_request'].includes(external_node_process_namespaceObject.env.GITHUB_EVENT_NAME)) {
+	if (!['issues', 'pull_request', 'pull_request_target'].includes(external_node_process_namespaceObject.env.GITHUB_EVENT_NAME)) {
 		throw new Error('Only `issues` and `pull_request` events are supported. Received: ' + external_node_process_namespaceObject.env.GITHUB_EVENT_NAME);
 	}
 
