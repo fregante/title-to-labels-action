@@ -42,7 +42,7 @@ Title examples:
 name: Labeler
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited]
   issues:
     types: [opened, edited]
@@ -50,6 +50,8 @@ on:
 jobs:
   Label:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: fregante/title-to-labels-action@v1
         with:
@@ -78,7 +80,7 @@ Examples:
 name: Labeler
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited]
   issues:
     types: [opened, edited]
@@ -86,6 +88,8 @@ on:
 jobs:
   Label:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: fregante/title-to-labels-action@v1
         with:

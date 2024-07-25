@@ -1,6 +1,6 @@
 name: Self
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited]
   issues:
     types: [opened, edited]
@@ -8,6 +8,8 @@ on:
 jobs:
   Self:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: ./
