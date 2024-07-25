@@ -1,3 +1,4 @@
+import {test, expect} from 'vitest';
 import {parseTitle} from './parse-title.js';
 
 test('ignores valid title', async () => {
