@@ -24,7 +24,7 @@ function getInputs() {
 }
 
 async function run() {
-	if (!['issues', 'pull_request'].includes(process.env.GITHUB_EVENT_NAME)) {
+	if (!['issues', 'pull_request', 'pull_request_target'].includes(process.env.GITHUB_EVENT_NAME)) {
 		throw new Error('Only `issues` and `pull_request` events are supported. Received: ' + process.env.GITHUB_EVENT_NAME);
 	}
 
