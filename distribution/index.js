@@ -56463,10 +56463,6 @@ function parseTitleWithDefaults(title) {
 	return {title, labels: []};
 }
 
-const _parseTitle = parseTitle;
-
-const _parseTitleWithDefaults = parseTitleWithDefaults;
-
 
 ;// CONCATENATED MODULE: ./index.js
 
@@ -56504,12 +56500,12 @@ async function run() {
 	const conversation = index_event.issue || index_event.pull_request;
 	let update = {};
 	if ((0,core.getInput)('keywords')) {
-		update = _parseTitle(conversation.title, getInputs());
+		update = parseTitle(conversation.title, getInputs());
 	} else if ((0,core.getInput)('labels')) {
 		throw new Error('Labels can’t be set without keywords. Set neither, set only keywords, or set both.');
 	} else {
 		(0,core.info)('No keywords defined. The defaults will be used');
-		update = _parseTitleWithDefaults(conversation.title);
+		update = parseTitleWithDefaults(conversation.title);
 	}
 
 	const {title, labels} = update;

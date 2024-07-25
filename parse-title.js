@@ -4,7 +4,7 @@ function titleCase(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function parseTitle(title, {keywords, labels}) {
+export function parseTitle(title, {keywords, labels}) {
 	const separator = /[)\-:\]]+/.exec(title);
 	if (!separator) {
 		return {title, labels: []};
@@ -26,7 +26,7 @@ function parseTitle(title, {keywords, labels}) {
 	return {title, labels: []};
 }
 
-function parseTitleWithDefaults(title) {
+export function parseTitleWithDefaults(title) {
 	for (const {keywords, labels} of defaults) {
 		console.log(keywords, labels);
 		const updates = parseTitle(title, {keywords, labels});
@@ -38,7 +38,3 @@ function parseTitleWithDefaults(title) {
 	return {title, labels: []};
 }
 
-const _parseTitle = parseTitle;
-export {_parseTitle as parseTitle};
-const _parseTitleWithDefaults = parseTitleWithDefaults;
-export {_parseTitleWithDefaults as parseTitleWithDefaults};
