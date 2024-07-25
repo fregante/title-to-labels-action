@@ -12,14 +12,14 @@ function parseTitle(title, {keywords, labels}) {
 
 	const intro = title
 		.slice(0, separator.index)
-		.replace(/[^\s\w]/g, '')
+		.replaceAll(/[^\s\w]/g, '')
 		.trim()
 		.toLowerCase();
 	if (intro && keywords.some(keyword => keyword.toLowerCase() === intro)) {
 		const cleanTitle = title.slice(separator.index + separator[0].length).trim();
 		return {
 			labels: labels ? labels : [],
-			title: titleCase(cleanTitle)
+			title: titleCase(cleanTitle),
 		};
 	}
 
