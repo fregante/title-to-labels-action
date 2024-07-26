@@ -56421,7 +56421,7 @@ function getApiBaseUrl() {
 
 
 ;// CONCATENATED MODULE: ./defaults.json
-const defaults_namespaceObject = JSON.parse('[{"keywords":["enhancement","feature request","new feature","feat","fr","idea","suggestion"],"labels":["enhancement"]},{"keywords":["bug","bug report","error"],"labels":["bug"]}]');
+const defaults_namespaceObject = JSON.parse('[{"keywords":["enhancement","feature request","new feature","feat","fr","idea","suggestion"],"labels":["enhancement"]},{"keywords":["bug","bug report","error","fix","fixes"],"labels":["bug"]}]');
 ;// CONCATENATED MODULE: ./parse-title.js
 
 
