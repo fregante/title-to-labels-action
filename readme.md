@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: fregante/title-to-labels-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 You can automatically install the above with [ghat](https://github.com/fregante/ghat):
@@ -93,19 +93,20 @@ jobs:
     steps:
       - uses: fregante/title-to-labels-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           keywords: idea
           # If you don't specify `labels`, the action will just clean up the titles from your keywords.
 
       # The action can be used as many times as needed in a single job
       - uses: fregante/title-to-labels-action@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           keywords: bug, bug report
           labels: bug
 
       - uses: fregante/title-to-labels-action@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           keywords: |
             feature request
             suggestions

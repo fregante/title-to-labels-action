@@ -10,6 +10,9 @@ inputs:
     description: The labels to apply when one of the keywords was found. Optional.
   GITHUB_TOKEN:
     description: 'The automatically-generated token, set this to \$\{\{ secrets.GITHUB_TOKEN \}\}'
+    deprecated: Use `token` instead
+  token:
+    description: 'The automatically-generated token, set this to \$\{\{ secrets.GITHUB_TOKEN \}\}'
 runs:
   using: node20
   main: distribution/index.js
