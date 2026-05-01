@@ -56429,7 +56429,7 @@ function titleCase(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function parseTitle(title, {keywords, labels}) {
+function parseTitle(title, {keywords, labels, cleanup = true}) {
 	const separator = /[):\]]+|\s-+/.exec(title);
 	if (!separator) {
 		return {title, labels: []};
@@ -56444,18 +56444,18 @@ function parseTitle(title, {keywords, labels}) {
 		const cleanTitle = title.slice(separator.index + separator[0].length).trim();
 		return {
 			labels: labels ?? [],
-			title: titleCase(cleanTitle),
+			title: cleanup ? titleCase(cleanTitle) : title,
 		};
 	}
 
 	return {title, labels: []};
 }
 
-function parseTitleWithDefaults(title) {
+function parseTitleWithDefaults(title, {cleanup = true} = {}) {
 	for (const {keywords, labels} of defaults_namespaceObject) {
 		console.log(keywords, labels);
-		const updates = parseTitle(title, {keywords, labels});
-		if (title !== updates.title) {
+		const updates = parseTitle(title, {keywords, labels, cleanup});
+		if (title !== updates.title || updates.labels.length > 0) {
 			return updates;
 		}
 	}
@@ -56483,9 +56483,11 @@ function parseList(string) {
 function getInputs() {
 	const keywords = parseList((0,core.getInput)('keywords'));
 	const labels = parseList((0,core.getInput)('labels'));
+	const cleanup = (0,core.getInput)('cleanup').toLowerCase() !== 'false';
 	(0,core.debug)(`Received keywords: ${keywords.join(', ')}`);
 	(0,core.debug)(`Received labels: ${labels.join(', ')}`);
-	return {keywords, labels};
+	(0,core.debug)(`Cleanup: ${cleanup}`);
+	return {keywords, labels, cleanup};
 }
 
 async function run() {
@@ -56505,30 +56507,47 @@ async function run() {
 		throw new Error('Labels can’t be set without keywords. Set neither, set only keywords, or set both.');
 	} else {
 		(0,core.info)('No keywords defined. The defaults will be used');
-		update = parseTitleWithDefaults(conversation.title);
+		const {cleanup} = getInputs();
+		update = parseTitleWithDefaults(conversation.title, {cleanup});
 	}
 
 	const {title, labels} = update;
 
-	if (conversation.title === title) {
+	const titleChanged = conversation.title !== title;
+	const hasLabels = labels.length > 0;
+
+	if (!titleChanged && !hasLabels) {
 		(0,core.info)('No title changes needed');
 		return;
 	}
 
-	(0,core.info)(`Changing title from "${conversation.title}" to ${title}`);
-	(0,core.info)(`Adding labels: ${labels.join(', ')}`);
+	const actions = [];
+
+	if (titleChanged) {
+		(0,core.info)(`Changing title from "${conversation.title}" to ${title}`);
+	}
+
+	if (hasLabels) {
+		(0,core.info)(`Adding labels: ${labels.join(', ')}`);
+	}
 
 	const octokit = new dist_bundle_Octokit();
 	const issue_number = conversation.number;
 	const [owner, repo] = external_node_process_namespaceObject.env.GITHUB_REPOSITORY.split('/');
-	await Promise.all([
-		octokit.issues.addLabels({
+
+	if (hasLabels) {
+		actions.push(octokit.issues.addLabels({
 			owner, repo, labels, issue_number,
-		}),
-		octokit.issues.update({
+		}));
+	}
+
+	if (titleChanged) {
+		actions.push(octokit.issues.update({
 			owner, repo, issue_number, title,
-		}),
-	]);
+		}));
+	}
+
+	await Promise.all(actions);
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await

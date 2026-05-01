@@ -70,6 +70,7 @@ npx ghat fregante/title-to-labels-action/workflow
 
 - `keywords` - The keywords to look for, separed by comma or newline. Case-insensitive.
 - `labels` - The labels to apply when one of the keywords was found. Optional.
+- `cleanup` - Whether to remove the keyword from the title. Set to `false` to only add labels without changing the title. Default is `true`.
 
 Either use one keyword per line or comma-separed values.
 **Note:** Do not use lists starting with `-`, Actions doesn't support them.

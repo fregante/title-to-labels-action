@@ -18,9 +18,11 @@ function parseList(string) {
 function getInputs() {
 	const keywords = parseList(getInput('keywords'));
 	const labels = parseList(getInput('labels'));
+	const cleanup = getInput('cleanup').toLowerCase() !== 'false';
 	debug(`Received keywords: ${keywords.join(', ')}`);
 	debug(`Received labels: ${labels.join(', ')}`);
-	return {keywords, labels};
+	debug(`Cleanup: ${cleanup}`);
+	return {keywords, labels, cleanup};
 }
 
 async function run() {
@@ -40,30 +42,47 @@ async function run() {
 		throw new Error('Labels can’t be set without keywords. Set neither, set only keywords, or set both.');
 	} else {
 		info('No keywords defined. The defaults will be used');
-		update = parseTitleWithDefaults(conversation.title);
+		const {cleanup} = getInputs();
+		update = parseTitleWithDefaults(conversation.title, {cleanup});
 	}
 
 	const {title, labels} = update;
 
-	if (conversation.title === title) {
+	const titleChanged = conversation.title !== title;
+	const hasLabels = labels.length > 0;
+
+	if (!titleChanged && !hasLabels) {
 		info('No title changes needed');
 		return;
 	}
 
-	info(`Changing title from "${conversation.title}" to ${title}`);
-	info(`Adding labels: ${labels.join(', ')}`);
+	const actions = [];
+
+	if (titleChanged) {
+		info(`Changing title from "${conversation.title}" to ${title}`);
+	}
+
+	if (hasLabels) {
+		info(`Adding labels: ${labels.join(', ')}`);
+	}
 
 	const octokit = new Octokit();
 	const issue_number = conversation.number;
 	const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-	await Promise.all([
-		octokit.issues.addLabels({
+
+	if (hasLabels) {
+		actions.push(octokit.issues.addLabels({
 			owner, repo, labels, issue_number,
-		}),
-		octokit.issues.update({
+		}));
+	}
+
+	if (titleChanged) {
+		actions.push(octokit.issues.update({
 			owner, repo, issue_number, title,
-		}),
-	]);
+		}));
+	}
+
+	await Promise.all(actions);
 }
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
