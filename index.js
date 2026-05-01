@@ -18,11 +18,11 @@ function parseList(string) {
 function getInputs() {
 	const keywords = parseList(getInput('keywords'));
 	const labels = parseList(getInput('labels'));
-	const cleanup = getInput('cleanup').toLowerCase() !== 'false';
+	const updateTitle = getInput('update-title').toLowerCase() !== 'false';
 	debug(`Received keywords: ${keywords.join(', ')}`);
 	debug(`Received labels: ${labels.join(', ')}`);
-	debug(`Cleanup: ${cleanup}`);
-	return {keywords, labels, cleanup};
+	debug(`Update title: ${updateTitle}`);
+	return {keywords, labels, updateTitle};
 }
 
 async function run() {
@@ -35,18 +35,19 @@ async function run() {
 	}
 
 	const conversation = event.issue || event.pull_request;
+	const {keywords, labels: inputLabels, updateTitle} = getInputs();
 	let update = {};
 	if (getInput('keywords')) {
-		update = parseTitle(conversation.title, getInputs());
+		update = parseTitle(conversation.title, {keywords, labels: inputLabels});
 	} else if (getInput('labels')) {
 		throw new Error('Labels can’t be set without keywords. Set neither, set only keywords, or set both.');
 	} else {
 		info('No keywords defined. The defaults will be used');
-		const {cleanup} = getInputs();
-		update = parseTitleWithDefaults(conversation.title, {cleanup});
+		update = parseTitleWithDefaults(conversation.title);
 	}
 
-	const {title, labels} = update;
+	const {title: parsedTitle, labels} = update;
+	const title = updateTitle ? parsedTitle : conversation.title;
 
 	const titleChanged = conversation.title !== title;
 	const hasLabels = labels.length > 0;

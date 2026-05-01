@@ -8,8 +8,8 @@ inputs:
     description: The keywords to look for, separed by comma or newline. Case-insensitive.
   labels:
     description: The labels to apply when one of the keywords was found. Optional.
-  cleanup:
-    description: Whether to remove the keyword from the title. Set to `false` to only add labels without changing the title. Default is `true`.
+  update-title:
+    description: Whether to update the title by removing the keyword. Set to `false` to only add labels without changing the title. Default is `true`.
   GITHUB_TOKEN:
     description: 'The automatically-generated token, set this to \$\{\{ secrets.GITHUB_TOKEN \}\}'
     deprecated: Use `token` instead

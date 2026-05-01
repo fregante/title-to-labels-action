@@ -101,26 +101,13 @@ test('Adds specified label', async () => {
 	});
 });
 
-test('With cleanup false, preserves title but still adds label', async () => {
+test('Returns cleaned title and label when keyword matches (caller decides whether to use cleaned title)', async () => {
 	const output = parseTitle('Meta: some discussion', {
 		keywords: ['meta'],
 		labels: ['meta'],
-		cleanup: false,
 	});
 	expect(output).toMatchObject({
-		title: 'Meta: some discussion',
+		title: 'Some discussion',
 		labels: ['meta'],
-	});
-});
-
-test('With cleanup false, preserves title and returns no labels when keyword not matched', async () => {
-	const output = parseTitle('Some unrelated title', {
-		keywords: ['meta'],
-		labels: ['meta'],
-		cleanup: false,
-	});
-	expect(output).toMatchObject({
-		title: 'Some unrelated title',
-		labels: [],
 	});
 });
