@@ -5,18 +5,13 @@ function titleCase(string) {
 }
 
 export function parseTitle(title, {keywords, labels}) {
-	const separator = /[)\-:\]]+/.exec(title);
+	const separator = /[):\]]+|\s-+/.exec(title);
 	if (!separator) {
 		return {title, labels: []};
 	}
 
-	const rawIntro = title.slice(0, separator.index);
-	const backtickCount = (rawIntro.match(/`/g) ?? []).length;
-	if (backtickCount % 2 !== 0) {
-		return {title, labels: []};
-	}
-
-	const intro = rawIntro
+	const intro = title
+		.slice(0, separator.index)
 		.replaceAll(/[^\s\w]/g, '')
 		.trim()
 		.toLowerCase();
