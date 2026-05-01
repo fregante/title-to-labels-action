@@ -56430,7 +56430,7 @@ function titleCase(string) {
 }
 
 function parseTitle(title, {keywords, labels}) {
-	const separator = /[)\-:\]]+/.exec(title);
+	const separator = /[):\]]+|\s-+/.exec(title);
 	if (!separator) {
 		return {title, labels: []};
 	}
