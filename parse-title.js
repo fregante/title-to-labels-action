@@ -10,8 +10,12 @@ export function parseTitle(title, {keywords, labels}) {
 		return {title, labels: []};
 	}
 
-	const intro = title
-		.slice(0, separator.index)
+	const rawIntro = title.slice(0, separator.index);
+	if (rawIntro.includes('`')) {
+		return {title, labels: []};
+	}
+
+	const intro = rawIntro
 		.replaceAll(/[^\s\w]/g, '')
 		.trim()
 		.toLowerCase();

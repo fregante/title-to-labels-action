@@ -80,6 +80,16 @@ test('Supports multiple keyword', async () => {
 	});
 });
 
+test('Ignores title starting with a code-formatted segment containing a dash', async () => {
+	const output = parseTitle('`fix-something`', {
+		keywords: ['fix'],
+	});
+	expect(output).toMatchObject({
+		title: '`fix-something`',
+		labels: [],
+	});
+});
+
 test('Adds specified label', async () => {
 	const output = parseTitle('Feature request - cool things', {
 		keywords: ['Feature request'],
