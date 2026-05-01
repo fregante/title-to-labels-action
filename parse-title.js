@@ -11,7 +11,8 @@ export function parseTitle(title, {keywords, labels}) {
 	}
 
 	const rawIntro = title.slice(0, separator.index);
-	if (rawIntro.includes('`')) {
+	const backtickCount = (rawIntro.match(/`/g) ?? []).length;
+	if (backtickCount % 2 !== 0) {
 		return {title, labels: []};
 	}
 
